@@ -1,13 +1,13 @@
 def adicionar_transacao():
-    lista = []  
+    lista = []
     lista.append(input('Adicione um nome à transação: '))
     lista.append(input('Adicione a categoria da transação [contas, entretenimento, saúde, investimento, estudo]: '))
     lista.append(input('Digite o valor da transação [Utilize um sinal - para gastos]: '))
-
-    linha = ','.join(lista) + '\n'  
     
-    with open('data.csv', 'a', encoding='utf-8') as file:  
-        file.write(linha) 
+    linha = ','.join(lista) + '\n'  
+    file = open('data.csv', 'a', encoding='utf-8')  
+    file.write(linha)  
+    file.close()
 
 def lista_transacoes():
     file = open('data.csv', 'r', encoding='utf-8')
