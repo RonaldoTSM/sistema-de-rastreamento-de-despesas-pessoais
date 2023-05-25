@@ -1,13 +1,21 @@
 def adicionar_transacao():
-    lista = []
+    lista = []  
     lista.append(input('Adicione um nome à transação: '))
     lista.append(input('Adicione a categoria da transação [contas, entretenimento, saúde, investimento, estudo]: '))
-    lista.append(input('Digite o valor da transação [Utilize um sinal - para gastos]: '))
-    
+
+    while True:
+        try:
+            valor = float(input('Digite o valor da transação [Utilize um sinal - para gastos]: '))
+            break
+        except ValueError:
+            print('Valor inválido. Digite um número válido.')
+
+    lista.append(str(valor))
+
     linha = ','.join(lista) + '\n'  
-    file = open('data.csv', 'a', encoding='utf-8')  
-    file.write(linha)  
-    file.close()
+
+    with open('data.csv', 'a', encoding='utf-8') as file:  
+        file.write(linha)
 
 def lista_transacoes():
     file = open('data.csv', 'r', encoding='utf-8')
@@ -27,7 +35,14 @@ def lista_transacoes():
         print(f"|{linha[0]:<20} |{linha[1]:<20} |{linha[2]:<20} |")
 
 def lista_categoria():
-    escolha = input('Qual a categoria que você deseja ver [contas, entretenimento, saúde, investimento, estudo]: ')
+    categorias = ['contas', 'entretenimento', 'saúde', 'investimento', 'estudo']
+
+    while True:
+        escolha = input('Qual a categoria que você deseja ver [contas, entretenimento, saúde, investimento, estudo]: ')
+        if escolha not in categorias:
+            print('Categoria inválida. Digite uma categoria válida [contas, entretenimento, saúde, investimento, estudo]')
+        else:
+            break 
 
     with open('data.csv', 'r', encoding='utf-8') as file:
         conteudo = file.readlines()
@@ -74,7 +89,15 @@ def extrato_transacoes():
     print(f'|total                                      |{total}')
 
 def extrato_categorias():
-    escolha = input('Qual a categoria que você deseja ver [contas, entretenimento, saúde, investimento, estudo]: ')
+    categorias = ['contas', 'entretenimento', 'saúde', 'investimento', 'estudo']
+    
+    while True:
+        escolha = input('Qual a categoria que você deseja ver [contas, entretenimento, saúde, investimento, estudo]: ')
+        if escolha not in categorias:
+            print('Categoria inválida. Digite uma categoria válida [contas, entretenimento, saúde, investimento, estudo]')
+        else:
+            break 
+
     total = 0
     file = open('data.csv', 'r', encoding='utf-8')
     conteudo = file.readlines()
